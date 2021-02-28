@@ -1,7 +1,7 @@
 use std::fs::File;
 use std::io::{BufRead, BufReader, Lines};
-mod OneLineParserMod;
-use OneLineParserMod::{CommandType, OneLineParser};
+mod OneLineParser;
+use OneLineParser::{CommandType, command_type, comp, dest, jump, symbol};
 
 struct Parser {
     line_iter: Lines<BufReader<File>>,
@@ -34,29 +34,24 @@ impl Parser {
         true
     }
 
-    fn commandType(&self) -> CommandType {
-        let one_line_parser = OneLineParser { line: &self.current_line };
-        one_line_parser.commandType()
+    fn command_type(&self) -> CommandType {
+        command_type(&self.current_line)
     }
     
     fn symbol(&self) -> Option<&str> {
-        let one_line_parser = OneLineParser { line: &self.current_line };
-        one_line_parser.symbol()
+        symbol(&self.current_line)
     }
     
     fn dest(&self) -> Option<&str> {
-        let one_line_parser = OneLineParser { line: &self.current_line };
-        one_line_parser.dest()
+        dest(&self.current_line)
     }
     
     fn comp(&self) -> Option<&str> {
-        let one_line_parser = OneLineParser { line: &self.current_line };
-        one_line_parser.comp()
+        comp(&self.current_line)
     }
 
     fn jump(&self) -> Option<&str> {
-        let one_line_parser = OneLineParser { line: &self.current_line };
-        one_line_parser.jump()
+        jump(&self.current_line)
     }
 }
 
